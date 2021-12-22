@@ -28,10 +28,11 @@ class Bot(metaclass=ABCMeta):
     def click_on(img):
         x = pag.locateCenterOnScreen(img, confidence=config.CLICK_ON_MATCHING_CONFIDENCE)
         if x is None:
+            logging.error(f'Cannot find {img} on screen')
             pag.screenshot('{}/debug_{}.png'.format(config.LOGS_DIR, time.time()))
-            logging.error('Cannot find {} on screen'.format(img))
             raise ValueError('Cannot find {} on screen'.format(img))
         pag.click(x)
+        return x
 
     def _start_game(self, fast_forward=True):
         self.click_on(config.BUTTON_GAME_START)
@@ -90,8 +91,9 @@ class Bot(metaclass=ABCMeta):
 
     def _wait_for_game_completion(self):
         logging.info('Waiting for game to be completed')
-        self.wait_for(config.BUTTON_GAME_TO_HOME, do_all_checks=False)
+        self.wait_for(config.BUTTON_MENU_NEXT_END, do_all_checks=False)
         logging.info('Game completed')
+        self.click_on(config.BUTTON_MENU_NEXT_END)
 
     # Checks
     def _is_present(self, img):

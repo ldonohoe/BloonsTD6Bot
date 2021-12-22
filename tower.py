@@ -1,4 +1,5 @@
 import pyautogui as pag
+import pydirectinput as pdi
 import logging
 
 import config
@@ -15,12 +16,15 @@ class Tower:
         self._upgrade_path = upgrade_path
         logging.info('Placing {}'.format(self._name))
         pag.moveTo(self._position)
-        pag.typewrite(self._hotkey)
+        while not self._bot._is_present('resources/menu/can_afford_tower.jpg'):
+            logging.info('Trying to buy tower, cant afford')
+            logging.info(self._bot._is_present('resources/menu/can_afford_tower.jpg'))
+            pdi.press(self._hotkey)
         pag.click()
 
     @staticmethod
     def _upgrade_track(track):
-        pag.press(config.HOTKEY_UPGRADES[track - 1])
+        pdi.press(config.HOTKEY_UPGRADES[track - 1])
 
     def _tower_upgrades_to_string(self, track, to_level):
         string = ''
