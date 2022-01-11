@@ -27,6 +27,7 @@ RELOAD_TOWER_COUNTER = 3
 CHECK_LEVEL_UP_COUNTER = 10
 CHECK_GAME_PAUSED_COUNTER = 30
 CHECK_DEFEATED_COUNTER = 10
+ABILITY_COOLDOWN = 15
 
 LOGS_DIR = '_logs'
 
@@ -58,7 +59,7 @@ BUTTON_OVERWRITE_OK = 'resources/menu/button_overwrite_ok.jpg'
 CAN_AFFORD_TOWER = 'resources/menu/can_afford_tower.jpg'
 
 # Events
-COLLECTION_XS = range(50, 1500, 50)
+COLLECTION_XS = range(400, 1200, 100)
 COLLECTION_Y = 450
 
 BUTTON_EVENT_COLLECT = 'resources/menu/button_event_collect.jpg'
@@ -72,6 +73,7 @@ TOWER_BOOMERANG_UPGRADE = 'resources/towers/boomerang/upgrade_{}_{}.jpg'
 TOWER_WIZARD_UPGRADE = 'resources/towers/wizard/upgrade_{}_{}.jpg'
 TOWER_SNIPER_UPGRADE = 'resources/towers/sniper/upgrade_{}_{}.jpg'
 TOWER_DRUID_UPGRADE = 'resources/towers/druid/upgrade_{}_{}.jpg'
+TOWER__UPGRADE = 'resources/towers/ninja/upgrade_{}_{}.jpg'
 
 # Heroes
 HERO_SELECTED_OBYN_1 = 'resources/towers/heroes/obyn_1.jpg'
@@ -94,6 +96,7 @@ WIZARD_SPOT = 'wizard.jpg'
 DRUID_SPOT = 'druid.jpg'
 SNIPER_SPOT = 'sniper.jpg'
 BOOMERANG_SPOT = 'boomerang.jpg'
+NINJA_SPOT = 'ninja.jpg'
 HERO_SPOT = 'hero.jpg'
 MAP_ICON = 'map.jpg'
 
@@ -128,5 +131,7 @@ MAP_GRID_OFFSET_Y = 80
 MAP_TILE_SIZE_X = 300
 MAP_TILE_SIZE_Y = 240
 
-MAP_TILE_SPACING_X = 50
+MAP_TILE_SPACING_X = 60
 MAP_TILE_SPACING_Y = 30
+
+# 585, 935, 1295

@@ -15,18 +15,12 @@ class ImpoppableBot(Bot):
         self._map = map.HardModeBonusMap('impoppable')
 
     def _load_game(self):
-        if config.DO_OPEN_MONKEYS or self._game_counter == 1:
+        try:
             newMap = self._map.findNextMap()
             logging.info(f'Found next bonus map: {self._map._name}')
-        else:
-            self._load_next_game_trick()
-
-    def _load_next_game_trick(self):
-        self.click_on(config.BUTTON_GAME_FREEPLAY)
-        pdi.press('esc')
-        pdi.press('esc')
-        self.click_on(config.BUTTON_GAME_TO_HOME)
-        newMap = self._map.findNextMap()
+        except ValueError as err:
+            pdi.press('esc')
+            raise
 
     # Single game
     def _play_game(self):
@@ -53,10 +47,6 @@ class ImpoppableBot(Bot):
         wizard.upgrade(3, 5)
         dart.upgrade(3, 5)
 
-        boomerang = Tower(self, config.HOTKEY_TOWER_BOOMERANG, f'{configDir}/boomerang.jpg',
-                                config.TOWER_UPGRADE_BOOMERANG, '')
-        boomerang.upgrade(2, 2) # Decide if top or middle path is better
-        boomerang.upgrade(3, 5)
 
         self._wait_for_game_completion()
         self._game_completed()

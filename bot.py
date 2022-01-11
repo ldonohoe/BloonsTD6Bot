@@ -49,13 +49,14 @@ class Bot(metaclass=ABCMeta):
             self.click_on(config.BUTTON_GAME_TO_HOME)
         elif self._state == 'NAVIGATING':
             logging.info('Failed navigating, fixing page and returning home')
-            while not self._is_present(config.BUTTON_MENU_PLAY):
+            while not self._is_present(config.BUTTON_MENU_PLAY) or self._is_present(config.BUTTON_EVENT_COLLECT):
                 # While navigating back to home, reset start point of beginner maps to p1
                 if self._is_present(config.BUTTON_MENU_MAPS_EXPERT):
                     self.click_on(config.BUTTON_MENU_MAPS_EXPERT)
                     self.click_on(config.BUTTON_MENU_MAPS_BEGINNER)
                 pdi.press('esc')
-        time.sleep(8)
+            logging.info('Fixed navigate, back to home')
+        time.sleep(5)
         if self._is_present(config.BUTTON_EVENT_COLLECT):
             logging.info('Received reward monkeys')
             self.click_on(config.BUTTON_EVENT_COLLECT)
@@ -100,7 +101,9 @@ class Bot(metaclass=ABCMeta):
         changed = False
         while not self._is_present(img):
             wait_counter += 1
-            changed = self._do_checks(wait_counter, do_all_checks) or changed
+            changeOnCheck = self._do_checks(wait_counter, do_all_checks)
+            self._use_abilities(wait_counter)
+            changed = changeOnCheck or changed
             if tower and wait_counter > 30:
                 raise ValueError()
         return changed
@@ -130,6 +133,11 @@ class Bot(metaclass=ABCMeta):
             changed = self._check_game_paused(wait_counter) or changed
             changed = self._check_defeated(wait_counter) or changed
         return changed
+
+    def _use_abilities(self, wait_counter):
+        if wait_counter % config.ABILITY_COOLDOWN == 0:
+            pdi.press('1')
+            pdi.press('2')
 
     def _check_level_up(self, wait_counter):
         if wait_counter % config.CHECK_LEVEL_UP_COUNTER == 0 and self._is_present(config.PROMPT_LEVEL_UP):

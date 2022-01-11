@@ -26,7 +26,7 @@ class HardModeBonusMap(Map):
         self._difficulty=difficulty
         super().__init__(map)
 
-    def findNextMap(self):
+    def findNextBonusMap(self):
         logging.info('Finding next bonus map')
         Bot.click_on(config.BUTTON_MENU_PLAY)
         bonusMap = None
@@ -54,17 +54,17 @@ class HardModeBonusMap(Map):
         return mapName
 
     def getMapNameFromCoords(self, mapCoords, mapPage):
-        mapCol = math.floor((mapCoords.x - config.MAP_GRID_OFFSET_X) / (config.MAP_TILE_SIZE_X+config.MAP_TILE_SPACING_X))
-        mapRow = math.ceil((mapCoords.y - config.MAP_GRID_OFFSET_Y) / (config.MAP_TILE_SIZE_Y+config.MAP_TILE_SPACING_Y))
+        mapCol = math.floor(mapCoords.x / (config.MAP_TILE_SIZE_X+config.MAP_TILE_SPACING_X))
+        mapRow = math.ceil(mapCoords.y / (config.MAP_TILE_SIZE_Y+config.MAP_TILE_SPACING_Y))
 
-        logging.info(f'Bonus map on page {mapPage}, at pos {mapCol}, {mapRow}')
+        logging.info(f'Bonus map on page {mapPage}, at pos {mapCol-1}, {mapRow-1}')
 
         mapList = config.BEGINNER_MAPS[mapPage-1]
 
         mapName = mapList[mapRow-1][mapCol-1]
         return mapName
 
-    def nextMap(self): 
+    def findNextMapInOrder(self): 
         if self._mapNum < 19:
             self._mapNum += 1
             mapPage = math.ceil(self._mapNum / 6)

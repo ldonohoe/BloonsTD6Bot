@@ -6,7 +6,7 @@ from tower import Tower
 
 
 
-class HardModeBonusMap(Bot):
+class HardBot(Bot):
 
     def __init__(self):
         super().__init__()
@@ -33,15 +33,16 @@ class HardModeBonusMap(Bot):
 
         configDir = config.BEGINNER_MAP_FILES.format(self._map._name)
 
-        hero = Tower(self, config.HOTKEY_HERO, f'{configDir}/hero.jpg', None, 'hero')
+        dart = Tower(self, config.HOTKEY_TOWER_DART, f'{configDir}/dart.jpg',
+                      config.TOWER_DART_UPGRADE, 'dart')
 
         logging.info('Starting game')
         self._start_game()
 
-        dart = Tower(self, config.HOTKEY_TOWER_DART, f'{configDir}/dart.jpg',
-                      config.TOWER_DART_UPGRADE, 'dart')
         dart.upgrade(2, 2)
         dart.upgrade(3, 4)
+
+        hero = Tower(self, config.HOTKEY_HERO, f'{configDir}/hero.jpg', None, 'hero')
 
         wizard = Tower(self, config.HOTKEY_TOWER_WIZARD, f'{configDir}/wizard.jpg',
                              config.TOWER_WIZARD_UPGRADE, 'wizard')
@@ -54,5 +55,5 @@ class HardModeBonusMap(Bot):
 
 
 if __name__ == '__main__':
-    bot = HardModeBonusMap()
+    bot = HardBot()
     bot.main()

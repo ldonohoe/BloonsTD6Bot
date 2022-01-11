@@ -13,6 +13,8 @@ class Tower:
             self._bot.wait_for(position, tower=True)
         except ValueError as err:
             raise ValueError(f'Error: Could not find {self._name} spot on screen')
+        except Exception:
+            raise
         self._position = self._bot.wait_location
         self._hotkey = hotkey
         self._upgrades = [0, 0, 0]
@@ -20,8 +22,11 @@ class Tower:
         self._target = target
         logging.info('Placing {}'.format(self._name))
         pag.moveTo(self._position)
+        waitCount = 1
         while not self._bot._is_present('resources/menu/can_afford_tower.jpg'):
             pdi.press(self._hotkey)
+            self._bot._do_checks(waitCount) # Manually do checks because we cant use wait_for here
+            waitCount += 1
         pag.click()
         if self._target != 'first':
             self._setTarget(self._target)
