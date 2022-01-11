@@ -53,6 +53,18 @@ You can read more about this failsafe [here](https://pyautogui.readthedocs.io/en
 
 #
 
-Enjoy!
+## Next Steps ##
 
-\- JSP
+Moving forward with this project, here are a few things I would like to implement/explore
+
+- New script for testing resource changes
+	- go through all supported maps and check if any resource images have changed in game
+	- potentially automatically update?
+- BloonsTDBot 2.0
+	- Build full representations of each map 
+		- Placable area, track area, water area, unplacable area marked
+		- Support for water towers	
+	- Intelligently place and upgrade based on in game balance
+	- Support all maps/difficulties
+	- Potential AI to learn to play?
+	- 
